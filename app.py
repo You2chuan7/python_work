@@ -1,11 +1,8 @@
 import os
 import uuid
 
-from flask import Flask, render_template, flash, redirect, url_for, request, send_from_directory, session
-#from flask_ckeditor import CKEditor, upload_success, upload_fail
+from flask import Flask, render_template, flash, redirect, url_for, request
 from flask_dropzone import Dropzone
-from flask_wtf.csrf import validate_csrf
-from wtforms import ValidationError
 
 from forms import LoginForm
 
@@ -27,6 +24,7 @@ app.config['CKEDITOR_SERVE_LOCAL'] = True
 app.config['CKEDITOR_FILE_UPLOADER'] = 'upload_for_ckeditor'
 
 # Flask-Dropzone config
+app.config['DROPZONE_ALLOWED_FILE_CUSTOM'] = True
 app.config['DROPZONE_ALLOWED_FILE_TYPE'] = '.xlsx'
 app.config['DROPZONE_MAX_FILE_SIZE'] = 1
 app.config['DROPZONE_MAX_FILES'] = 30
@@ -46,16 +44,23 @@ def bootstrap():
         return redirect(url_for('index'))
     return render_template('bootstrap.html', form=form)
 
-@app.route('/dropzone-upload', methods=['GET', 'POST'])
+
+@app.route('/uploaded-images')
+def show_images():
+    return render_template('uploaded.html')
+
+
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
+
 
 def random_filename(filename):
     ext = os.path.splitext(filename)[1]
     new_filename = uuid.uuid4().hex + ext
     return new_filename
 
+@app.route('/dropzone-upload', methods=['GET', 'POST'])
 def dropzone_upload():
     if request.method == 'POST':
         # check if the post request has the file part
