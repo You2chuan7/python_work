@@ -6,8 +6,10 @@ authors = ["yc"]
 license = "mit"
 
 [tool.poetry.dependencies]
-python = "3.9.2"
+
 Flask = "^2.1.2"
+Flask-Dropzone = "^1.6.0"
+Flask-WTF = "^1.0.1"
 
 [tool.poetry.dev-dependencies]
 

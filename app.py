@@ -11,7 +11,7 @@ app.secret_key = os.getenv('SECRET_KEY', 'secret string')
 app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
 
-#文静上传路径 储存路径
+#文件上传路径 储存路径
 app.config['UPLOAD_PATH'] = os.path.join(app.root_path, 'upload')
 
 if not os.path.exists(app.config['UPLOAD_PATH']):
