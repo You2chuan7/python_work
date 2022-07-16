@@ -4,4 +4,4 @@
 使用flask弄了两个界面
 相关依赖在pyproject.toml
 
-视频：https://youtu.be/1Dho8XJT_pM
+
